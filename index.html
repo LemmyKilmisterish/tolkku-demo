@@ -996,7 +996,7 @@ var S = {
   theme:null, need:"", needQuote:"", probe:"", scope:"", headcount:null,
   trigger:"", success:"", timeline:null, budget:null, decision:null,
   contact:{name:"",org:"",email:"",phone:""},
-  pick:null,
+  pick:null, solutionsId:null,
   asked:[], phase:"core", done:false, skipped:false, sent:false, view:"client", voice:false
 };
 
@@ -1185,6 +1185,19 @@ function addEcho(text){
   scrollDown();
 }
 
+/* Tapahtumaloki palvelimelle. Hiljainen: julkisessa staattisessa demossa
+   päätepistettä ei ole, jolloin kutsu vain epäonnistuu äänettömästi. */
+function postEvent(type, data){
+  try {
+    var body = JSON.stringify({type:type, id:S.solutionsId || null, data:data || null});
+    if (navigator.sendBeacon){
+      navigator.sendBeacon("/api/event", new Blob([body], {type:"application/json"}));
+    } else if (window.fetch){
+      fetch("/api/event", {method:"POST", headers:{"Content-Type":"application/json"}, body:body}).catch(function(){});
+    }
+  } catch(e){}
+}
+
 function reportPayload(){
   return {
     themeLabel: S.theme ? THEMES[S.theme].label : null,
@@ -1214,6 +1227,7 @@ function fetchLLMSolutions(cb){
   }).then(function(j){
     clearTimeout(timer);
     if (!j || !j.primary || !j.alt || !j.joker) throw new Error("bad shape");
+    S.solutionsId = j.id || null;
     cb([
       {kind:"agenssi", kicker:"Agenssin polku 1", o:j.primary, scale:j.primary.scale},
       {kind:"agenssi", kicker:"Agenssin polku 2", o:j.alt,     scale:j.alt.scale},
@@ -1245,7 +1259,16 @@ function renderProposals(){
     dots.remove();
     t.querySelector(".say").textContent = "Kolme tapaa ratkaista tämä. Kaksi meiltä, yksi ilman meitä.";
     t.appendChild(el("div","note","Jokerikortti on tarkoituksella jotain, mitä emme myy. Jos se riittää, ette tarvitse meitä. Valitse se, joka tuntuu lähimmältä – tai älä valitse mitään."));
-    renderProposalCards(t, setv || proposalSet());
+    var list = setv || proposalSet();
+    /* LLM-polku lokitettiin jo palvelimella /api/solutions-kutsussa;
+       fallback-polusta lähetetään tilannekuva ja näytetyt kortit tässä. */
+    if (!setv){
+      postEvent("proposals_shown", {
+        source:"static", report: reportPayload(),
+        proposals: list.map(function(p){ return {kicker:p.kicker, title:p.o.title}; })
+      });
+    }
+    renderProposalCards(t, list);
   });
 }
 
@@ -1272,6 +1295,7 @@ function renderProposalCards(t, list){
         b.setAttribute("aria-pressed","true");
         S.pick = {title:p.o.title, kind:p.kind, kicker:p.kicker};
       }
+      postEvent("pick", S.pick);
       renderBrief();
     });
     box.appendChild(b);
@@ -1513,6 +1537,10 @@ function renderFoot(){
              + "?subject=" + encodeURIComponent(subject(true))
              + "&body=" + encodeURIComponent(body(true));
     try { window.location.href = href; } catch(e){}
+    /* Ei nimiä eikä yhteystietoja lokiin: vain teema ja valinta. */
+    postEvent("sent", {theme: S.theme ? THEMES[S.theme].label : null,
+                       pick: S.pick ? S.pick.title : null,
+                       org_given: !!S.contact.org});
     S.sent = true;
     renderBrief();
     think(function(){
@@ -1809,7 +1837,7 @@ function start(seed){
     theme:seed || null, need:"", needQuote:"", probe:"", scope:"", headcount:null,
     trigger:"", success:"", timeline:null, budget:null, decision:null,
     contact:{name:"",org:"",email:"",phone:""},
-    pick:null,
+    pick:null, solutionsId:null,
     asked:[], phase:"core", done:false, skipped:false, sent:false, view:S ? S.view : "client", voice:S ? S.voice : false
   };
   stream.innerHTML = "";
