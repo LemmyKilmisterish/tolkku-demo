@@ -1908,13 +1908,13 @@ function start(seed){
   if (seed){
     addBot({
       say:"Valitsit aiheeksi " + THEMES[seed].label.toLowerCase() + ". Kerro omin sanoin, mikä siinä on teillä nyt kesken.",
-      note:"Voit myös puhua vastauksesi mikrofonipainikkeella.",
+      note:"Yleinen kuvaus riittää, nimiä ei tarvita. Voit myös puhua vastauksesi mikrofonipainikkeella.",
       chips:[]
     });
   } else {
     addBot({
       say:"Kerro omin sanoin: mikä sai teidät etsimään apua juuri nyt?",
-      note:"Ei tarvitse olla valmiiksi jäsennelty. Yksi kappale riittää. Voit myös puhua vastauksesi mikrofonipainikkeella.",
+      note:"Ei tarvitse olla valmiiksi jäsennelty. Yksi kappale riittää, eikä nimiä tarvita. Voit myös puhua vastauksesi mikrofonipainikkeella.",
       chips:[]
     });
   }
