@@ -395,7 +395,7 @@ footer img{width:52px;margin-bottom:1rem}
           <h2>Tolkku</h2>
           <span class="badge">3 minuuttia</span>
         </div>
-        <p>Tolkku ei kehitä organisaatiotasi. Se kysyy kolme kysymystä, jotka agenssilainen kysyisi joka tapauksessa &mdash; jotta ensimmäinen tapaaminen voi alkaa vasta niiden jälkeen. Kirjoita tai puhu, omin sanoin.</p>
+        <p>Tolkku ei kehitä organisaatiotasi. Se kysyy kolme kysymystä, jotka agenssilainen kysyisi joka tapauksessa ymmärtääkseen, mikä teidän tilanteenne on ja mitä tarvitsette. Kirjoita tai puhu, omin sanoin.</p>
       </div>
       <div>
         <p style="font-size:.9rem">Kolmen kysymyksen jälkeen Tolkku kysyy luvan muutamaan tarkentavaan &mdash; ne saa myös ohittaa. Lopuksi lähetät tilannekuvan Agenssille. Tiedot eivät mene minnekään muualle.</p>
@@ -449,7 +449,7 @@ footer img{width:52px;margin-bottom:1rem}
 <section class="services" id="palvelut">
   <div class="wrap">
     <span class="eyebrow">Palvelumme</span>
-    <h2 style="margin-top:.5rem;max-width:32rem">Neljä tapaa, joilla olemme mukana arjessanne</h2>
+    <h2 style="margin-top:.5rem;max-width:32rem">Neljä tapaa, joilla olemme mukana arjessasi</h2>
     <div class="svc-grid">
       <article class="svc">
         <h3>Itsensä ja muiden johtamisen kehittäminen</h3>
@@ -491,7 +491,7 @@ footer img{width:52px;margin-bottom:1rem}
 
 <section class="trivia" id="asiakkaat">
   <div class="wrap">
-    <span class="eyebrow">Asiakkaitamme</span>
+    <span class="eyebrow">Tuloksia</span>
     <h2 style="margin:.5rem 0 2rem;max-width:34rem">Alkuvuoden 2025 kyselyssä 94&nbsp;% vastanneista oli suosittelijoita</h2>
     <div class="trivia-grid">
       <div class="tv"><div class="v">31</div><div class="l">vuotta merkityksellisen työelämän puolesta</div></div>
@@ -545,10 +545,10 @@ var PEOPLE = {
 
 /* Teemat vastaavat Agenssin oikeaa palvelurakennetta. */
 var THEMES = {
-  esihenkilo:  {label:"Esihenkilötyö",            service:"Esihenkilövalmennukset", owner:"paula",  peer:"maarit",
+  esihenkilo:  {label:"Esihenkilötyö",            service:"Esihenkilövalmennukset", owner:"tarja",  peer:"paula",
                 probe:"Mikä esihenkilöiden arjessa nyt takkuaa eniten – vaikeat keskustelut, tavoitteiden asettaminen vai oma jaksaminen?",
                 keys:["esihenkil","esimies","esimieh","esimiest","lähijohta","päällik","tiiminvetä","johtamistaid","uusi rooli","valmentava johtam"]},
-  johtoryhma:  {label:"Johtoryhmätyö",            service:"Johtoryhmävalmennukset", owner:"paula",  peer:"tarja",
+  johtoryhma:  {label:"Johtoryhmätyö",            service:"Johtoryhmävalmennukset", owner:"tarja",  peer:"maarit",
                 probe:"Onko kyse johtoryhmän yhteisestä suunnasta, keskinäisestä luottamuksesta vai työskentelytavasta kokouksissa?",
                 keys:["johtoryhm","jory","johtotiim","ylin johto","hallitus","johdon työskentel","toimitusjohtaj"]},
   coaching:    {label:"Yksilön kehittyminen",     service:"Yksilö- ja ryhmäcoaching", owner:"tarja", peer:"paula",
@@ -557,22 +557,22 @@ var THEMES = {
   tiimi:       {label:"Tiimin toimivuus",         service:"Tiimien valmennukset, mm. yhteisöohjautuvuus", owner:"maarit", peer:"tarja",
                 probe:"Mistä tiimin toimimattomuus tällä hetkellä näkyy – tuloksissa, ilmapiirissä vai siinä, ettei asioita saada päätökseen?",
                 keys:["tiimi","tiimin","itseohjautuv","yhteisöohjautuv","ryhmä","porukka","työryhm","siilo","yhteispel"]},
-  vuorovaikutus:{label:"Vuorovaikutus ja konfliktit", service:"Yhteistyö- ja vuorovaikutusvalmennukset", owner:"maarit", peer:"paula",
+  vuorovaikutus:{label:"Vuorovaikutus ja konfliktit", service:"Yhteistyö- ja vuorovaikutusvalmennukset", owner:"maarit", peer:"tarja",
                 probe:"Kuinka pitkään tilanne on jatkunut, ja onko asiaa jo otettu puheeksi jollain tasolla?",
                 keys:["vuorovaikut","konflikt","riita","riite","puheeksiot","palautteen ant","kiusaa","ilmapiir","luottamuspul","klikki","erimielisyy","kärhäm","sovittelu"]},
   hyvinvointi: {label:"Jaksaminen ja työhyvinvointi", service:"Työhyvinvoinnin kehittäminen", owner:"tarja", peer:"maarit",
                 probe:"Näkyykö kuormitus jo mittareissa – sairauspoissaoloissa, vaihtuvuudessa tai henkilöstökyselyssä?",
                 keys:["jaksam","uupum","burnout","työhyvinvoin","sairauspoissaol","kuormit","stress","vaihtuvuus","väsy","työkyky","palautum"]},
-  kulttuuri:   {label:"Kulttuuri ja toimintatavat", service:"Organisaatio- ja johtamiskulttuurin kehittäminen", owner:"paula", peer:"tarja",
+  kulttuuri:   {label:"Kulttuuri ja toimintatavat", service:"Organisaatio- ja johtamiskulttuurin kehittäminen", owner:"tarja", peer:"maarit",
                 probe:"Mikä kulttuurissa pitäisi olla vuoden päästä toisin, jotta huomaisitte sen arjessa?",
                 keys:["kulttuur","arvot","arvoj","toimintatav","identiteet","psykologinen turvallisuus","yhteinen suunta","asenne"]},
-  muutos:      {label:"Muutos ja fasilitointi",   service:"Fasilitoinnit, mm. strategiaprosessi ja muutoksen läpivienti", owner:"paula", peer:"maarit",
+  muutos:      {label:"Muutos ja fasilitointi",   service:"Fasilitoinnit, mm. strategiaprosessi ja muutoksen läpivienti", owner:"maarit", peer:"tarja",
                 probe:"Missä vaiheessa muutos on – valmistelussa, juuri julkistettu vai jo käynnissä?",
                 keys:["muutos","muutok","fuusio","yrityskaupp","integraati","organisaatiomuutos","yt-neuvottel","yt neuvottel","strategi","fasilito","uudelleenjärjest","työpaj","suunnittelupäiv","kick","saneeraus"]},
-  hr:          {label:"HR ja People Operations",  service:"HR:n tuki / ulkoistettu HR", owner:"maiju", peer:"paula",
+  hr:          {label:"HR ja People Operations",  service:"HR:n tuki / ulkoistettu HR", owner:"tarja", peer:"maiju",
                 probe:"Onko kyse HR-prosessien rakentamisesta vai siitä, ettei nykyiselle HR:lle jää aikaa kehittämiseen?",
                 keys:["hr","henkilöstöhallin","people operations","hr-prosess","perehdyt","työsuhde","osaamisen kehittäm","henkilöstöasia","palkkaus","työsopimu"]},
-  rekry:       {label:"Rekrytointi",              service:"Rekrytoinnit", owner:"maiju", peer:"paula",
+  rekry:       {label:"Rekrytointi",              service:"Rekrytoinnit", owner:"maiju", peer:"tarja",
                 probe:"Mihin rooliin haette, ja mikä nykyisessä hakuprosessissa on tuottanut pettymyksiä?",
                 keys:["rekry","rekrytoin","hakuprosess","headhunt","suorahaku","avainhenkilöhaku","työnantajamiel","hakija"]}
 };
@@ -891,6 +891,9 @@ var SOLUTIONS = {
 
 function norm(s){ return (s||"").toLowerCase().replace(/\s+/g," "); }
 
+/* Memo 3.9.: yhteisissä palveluissa vastuu jaetaan reilusti, ei aina samalle. */
+var SHARED_THEMES = {coaching:1, tiimi:1, hyvinvointi:1, kulttuuri:1};
+
 function detectTheme(text){
   var t = norm(text), best = null, bestScore = 0;
   for (var k in THEMES){
@@ -988,9 +991,11 @@ function parseDecision(text){
   var t = norm(text);
   var mine = /(minä itse|mina itse|minä päätän|päätän itse|itse päätän|oma budjet|voin päättää|minulla on valtuu|päätösvalta on minulla|olen toimitusjohtaj|olen omistaj|olen henkilöstöjohtaj)/.test(t);
   var group = /(johtoryhm|jory|hallitus|yhdessä|esitys|hyväksy|kilpailut|tarjouspyyn|hankinta)/.test(t);
+  var prep  = /(^|\s)(esihenkilö|esihenkilo|esimies|hr)(\s|$|[.,])/.test(t);
   if (mine) return {text:String(text).trim().slice(0,90), power:"Päättäjä mukana keskustelussa", score:2};
   if (group) return {text:String(text).trim().slice(0,90), power:"Päätös ryhmässä / esityksen kautta", score:1};
-  return {text:String(text).trim().slice(0,90), power:"Päätöspolku epäselvä", score:0};
+  if (prep)  return {text:String(text).trim().slice(0,90), power:"Esihenkilö tai HR valmistelee", score:1};
+  return {text:String(text).trim().slice(0,90), power:"Päätöspolku auki", score:0};
 }
 
 /* ============================================================
@@ -1001,7 +1006,7 @@ var S = {
   theme:null, need:"", needQuote:"", probe:"", scope:"", headcount:null,
   trigger:"", success:"", timeline:null, budget:null, decision:null,
   contact:{name:"",org:"",email:"",phone:""},
-  pick:null, solutionsId:null,
+  pick:null, solutionsId:null, fairFlip: Math.random() < 0.5,
   asked:[], phase:"core", done:false, skipped:false, sent:false, view:"client", voice:false
 };
 
@@ -1028,8 +1033,8 @@ var QUESTIONS = {
   probe: function(){
     var th = S.theme ? THEMES[S.theme] : null;
     return {
-      say: th ? th.probe : "Mitä olette jo kokeilleet, ja mikä siinä ei toiminut?",
-      note:"Tarkennus auttaa meitä valitsemaan oikean agenssilaisen jo ennen ensimmäistä puhelua.",
+      say: th ? th.probe : "Kerro vielä omin sanoin tarkemmin: mikä arjessa takkuaa ja keitä se koskee?",
+      note:"Tarkennus auttaa meitä valitsemaan sinulle alustavat ehdotukset palvelusta ja agenssilaisesta jo ennen ensimmäistä yhteydenottoa.",
       chips:[]
     };
   },
@@ -1038,14 +1043,14 @@ var QUESTIONS = {
     return {
       say:"Ketä tämä koskee ja kuinka montaa ihmistä?",
       note:"Esimerkiksi ”12 esihenkilöä kolmelta paikkakunnalta” tai ”koko 60 hengen yksikkö”. Konteksti: " + th + ".",
-      chips:["Yksi ihminen","5–10 henkeä","10–30 henkeä","Yli 50 henkeä"]
+      chips:["Yksi ihminen","2–4 henkeä","5–10 henkeä","10–15 henkeä","15–25 henkeä","26–39 henkeä","40–60 henkeä","Yli 60 henkeä"]
     };
   },
   trigger: function(){
     return {
       say:"Miksi juuri nyt? Tapahtuiko jotain, joka nosti asian pöydälle?",
-      note:"Organisaatiomuutos, henkilöstökysely, avainhenkilön lähtö, uusi strategia – tai hiipivä tunne siitä, ettei homma toimi.",
-      chips:["Henkilöstökyselyn tulos","Organisaatiomuutos","Uusi johto tai esihenkilö","Tilanne on kytenyt pitkään"]
+      note:"",
+      chips:["Henkilöstökyselyn tulokset","Organisaatiomuutos","Uusi strategia","Uusi johto tai esihenkilö","Tilanne on kytenyt pitkään"]
     };
   },
   success: function(){
@@ -1059,21 +1064,29 @@ var QUESTIONS = {
     return {
       say:"Milloin haluaisitte aloittaa?",
       note:"",
-      chips:["Heti kun mahdollista","Syksyllä 2026","Alkuvuonna 2027","Ei kiirettä, kartoitamme"]
+      chips:(function(){
+        /* Aikaikkunat lasketaan päivämäärästä, ei kovakoodata vuosia. */
+        var d = new Date(), m = d.getMonth(), y = d.getFullYear(), win;
+        if (m <= 2)      win = ["Keväällä " + y, "Syksyllä " + y];
+        else if (m <= 5) win = ["Syksyllä " + y, "Alkuvuonna " + (y + 1)];
+        else if (m <= 8) win = ["Loppuvuonna " + y, "Alkuvuonna " + (y + 1)];
+        else             win = ["Alkuvuonna " + (y + 1), "Keväällä " + (y + 1)];
+        return ["Heti kun mahdollista", win[0], win[1], "Ei kiirettä, kartoitamme"];
+      })()
     };
   },
   budget: function(){
     return {
       say:"Onko tälle varattu budjettia, ja jos on, minkä suuruinen?",
-      note:"Kysymme suoraan, koska se säästää molempien aikaa. Emme mitoita työtä budjetin mukaan vaan tavoitteen – mutta on reilua tietää raami.",
-      chips:["Alle 5 000 €","5 000–15 000 €","15 000–40 000 €","Yli 40 000 €","Ei vielä määritelty"]
+      note:"Kysymme suoraan, koska se säästää molempien aikaa. Emme mitoita työtä budjetin vaan tavoitteen mukaan. On reilua tietää raami.",
+      chips:["Alle 1 000 €","1 000–3 000 €","4 000–6 000 €","7 000–10 000 €","10 000–15 000 €","15 000–20 000 €","20 000–30 000 €","30 000–40 000 €","Yli 40 000 €","Ei vielä määritelty"]
     };
   },
   decision: function(){
     return {
       say:"Kuka tekee päätöksen tästä?",
       note:"",
-      chips:["Minä itse","Johtoryhmä","Esitys johdolle","Emme ole vielä miettineet"]
+      chips:["Minä itse","Esihenkilö","HR","Johtoryhmä","Emme ole vielä miettineet"]
     };
   }
 };
@@ -1165,7 +1178,15 @@ function addBot(q){
     q.chips.forEach(function(label){
       var b = el("button","chip", esc(label));
       b.type = "button";
-      b.addEventListener("click", function(){ submit(label); });
+      b.addEventListener("click", function(){
+        /* Toimintochipit lähettävät heti; muut täyttävät kentän, jotta
+           vastausta voi vielä täydentää omin sanoin ("kolmelta paikkakunnalta"). */
+        if (/lähetä nyt|lähetä jo|kysy toki|ei kiitos/i.test(label)){ submit(label); return; }
+        input.value = input.value.trim() ? input.value.trim() + ", " + label : label;
+        autogrow();
+        micHint.textContent = "Täydennä halutessasi ja paina lähetä.";
+        input.focus();
+      });
       c.appendChild(b);
     });
     t.appendChild(c);
@@ -1262,8 +1283,8 @@ function renderProposals(){
 
   fetchLLMSolutions(function(setv){
     dots.remove();
-    t.querySelector(".say").textContent = "Kolme tapaa ratkaista tämä. Kaksi meiltä, yksi ilman meitä.";
-    t.appendChild(el("div","note","Jokerikortti on tarkoituksella jotain, mitä emme myy. Jos se riittää, ette tarvitse meitä. Valitse se, joka tuntuu lähimmältä – tai älä valitse mitään."));
+    t.querySelector(".say").textContent = "Kolme alustavaa ehdotusta. Kaksi meiltä, yksi ilman meitä.";
+    t.appendChild(el("div","note","Tunnistan vastauksistasi mahdollisia etenemispolkuja, mutta jokainen organisaatio on erilainen. Siksi varmistamme aina yhdessä, mikä ratkaisu palvelee tarpeitanne parhaiten. Jokerikortti on tarkoituksella jotain, mitä emme myy. Jos se riittää, ette tarvitse meitä. Valitse se, joka tuntuu lähimmältä – tai älä valitse mitään."));
     var list = setv || proposalSet();
     /* LLM-polku lokitettiin jo palvelimella /api/solutions-kutsussa;
        fallback-polusta lähetetään tilannekuva ja näytetyt kortit tässä. */
@@ -1288,7 +1309,7 @@ function renderProposalCards(t, list){
       + '<h4>' + esc(p.o.title) + '</h4>'
       + '<p class="fit">' + esc(p.o.fit) + '</p>'
       + '<ul>' + p.o.what.map(function(w){ return '<li>' + esc(w) + '</li>'; }).join('') + '</ul>'
-      + '<div class="foot"><span>' + esc(p.scale) + '</span><span class="pick">Tämä kiinnostaa</span></div>'
+      + '<div class="foot"><span>' + esc(p.scale) + '</span><span class="pick">Tämä voisi sopia meille</span></div>'
       + '</div>';
     b.addEventListener("click", function(){
       var already = b.getAttribute("aria-pressed") === "true";
@@ -1354,9 +1375,11 @@ function suggestedOpener(){
 }
 
 function routing(){
-  if (!S.theme) return {owner:PEOPLE.paula, peer:PEOPLE.maarit, service:"Tarvekartoitus – palvelu tarkentuu keskustelussa"};
+  if (!S.theme) return {owner:PEOPLE.paula, peer:PEOPLE.maarit, service:"Tarvekartoitus – palvelu tarkentuu keskustelussa", shared:false};
   var th = THEMES[S.theme];
-  return {owner:PEOPLE[th.owner], peer:PEOPLE[th.peer], service:th.service};
+  var ow = th.owner, pe = th.peer;
+  if (SHARED_THEMES[S.theme] && S.fairFlip){ var x = ow; ow = pe; pe = x; }
+  return {owner:PEOPLE[ow], peer:PEOPLE[pe], service:th.service, shared:!!SHARED_THEMES[S.theme]};
 }
 
 function slotRow(label, value, cls){
@@ -1413,7 +1436,7 @@ function renderBrief(){
     var pp = el("div","slot" + (S.theme ? " filled" : ""));
     pp.appendChild(el("dt",null,"Vastuutus"));
     var pd = el("dd");
-    pd.innerHTML = "<div class=\"person\"><img src=\""+r.owner.img+"\" alt=\"\"><div><div class=\"nm\">"+esc(r.owner.name)+"</div><div class=\"rl\">ensisijainen</div></div></div>"
+    pd.innerHTML = "<div class=\"person\"><img src=\""+r.owner.img+"\" alt=\"\"><div><div class=\"nm\">"+esc(r.owner.name)+"</div><div class=\"rl\">"+(r.shared ? "ensisijainen · reilu jako, vuorottelee" : "ensisijainen")+"</div></div></div>"
                  + "<div class=\"person\" style=\"margin-top:.6rem\"><img src=\""+r.peer.img+"\" alt=\"\"><div><div class=\"nm\">"+esc(r.peer.name)+"</div><div class=\"rl\">vara / pari</div></div></div>";
     pp.appendChild(pd);
     slotsEl.appendChild(pp);
@@ -1732,6 +1755,23 @@ function finish(){
   renderBrief();
   input.setAttribute("placeholder","Keskustelu on valmis. Täytä yhteystiedot.");
   sendBtn.disabled = true;
+
+  /* Selkeä reitti eteenpäin: nappi, joka vie yhteystietolomakkeeseen. */
+  var cta = el("div","turn bot");
+  var btn = el("button","btn primary","Täytä yhteystiedot ja lähetä tilannekuva");
+  btn.type = "button";
+  btn.style.marginTop = ".25rem";
+  btn.addEventListener("click", function(){
+    var foot = document.getElementById("briefFoot");
+    foot.scrollIntoView({behavior:"smooth", block:"center"});
+    setTimeout(function(){
+      var nm = document.getElementById("cName");
+      if (nm) nm.focus();
+    }, 450);
+  });
+  cta.appendChild(btn);
+  stream.appendChild(cta);
+  scrollDown();
 }
 
 /* ============================================================
@@ -1842,7 +1882,7 @@ function start(seed){
     theme:seed || null, need:"", needQuote:"", probe:"", scope:"", headcount:null,
     trigger:"", success:"", timeline:null, budget:null, decision:null,
     contact:{name:"",org:"",email:"",phone:""},
-    pick:null, solutionsId:null,
+    pick:null, solutionsId:null, fairFlip: Math.random() < 0.5,
     asked:[], phase:"core", done:false, skipped:false, sent:false, view:S ? S.view : "client", voice:S ? S.voice : false
   };
   stream.innerHTML = "";
