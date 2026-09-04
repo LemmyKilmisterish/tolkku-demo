@@ -551,34 +551,34 @@ function mailOf(p){ return String(p.mailr || "").split("").reverse().join(""); }
 var THEMES = {
   esihenkilo:  {label:"Esihenkilötyö",            service:"Esihenkilövalmennukset", owner:"tarja",  peer:"paula",
                 probe:"Mikä esihenkilöiden arjessa nyt takkuaa eniten: vaikeat keskustelut, tavoitteiden asettaminen vai oma jaksaminen?",
-                keys:["esihenkil","esimies","esimieh","esimiest","lähijohta","päällik","tiiminvetä","johtamistaid","uusi rooli","valmentava johtam"]},
+                keys:["esihenkil","esimies","esimieh","esimiest","lähijohta","päällik","tiiminvetä","johtamistaid","uusi rooli","valmentava johtam","johtami","johtaj","kehityskeskustel","tavoitekeskustel","työnjohta","lähiesi","esihenkilötyö"]},
   johtoryhma:  {label:"Johtoryhmätyö",            service:"Johtoryhmävalmennukset", owner:"tarja",  peer:"maarit",
                 probe:"Onko kyse johtoryhmän yhteisestä suunnasta, keskinäisestä luottamuksesta vai työskentelytavasta kokouksissa?",
-                keys:["johtoryhm","jory","johtotiim","ylin johto","hallitus","johdon työskentel","toimitusjohtaj"]},
+                keys:["johtoryhm","jory","johtotiim","ylin johto","hallitus","johdon työskentel","toimitusjohtaj","johtoryhmätyö","johtoryhmän toimint","johdon yhteisty"]},
   coaching:    {label:"Yksilön kehittyminen",     service:"Yksilö- ja ryhmäcoaching", owner:"tarja", peer:"paula",
                 probe:"Onko tarve yhdelle henkilölle vai useammalle, ja onko taustalla uusi rooli, kuormitus vai halu kehittyä?",
-                keys:["coach","sparra","mentor","työnohjaus","yksilövalmenn","urapolk","oma kehitty","itsetuntem"]},
+                keys:["coach","sparra","mentor","työnohjaus","yksilövalmenn","urapolk","oma kehitty","itsetuntem","henkilökohtai","oma johtajuu","sparrausta","coachaus"]},
   tiimi:       {label:"Tiimin toimivuus",         service:"Tiimien valmennukset, mm. yhteisöohjautuvuus", owner:"maarit", peer:"tarja",
                 probe:"Mistä tiimin toimimattomuus tällä hetkellä näkyy: tuloksissa, ilmapiirissä vai siinä, ettei asioita saada päätökseen?",
-                keys:["tiimi","tiimin","itseohjautuv","yhteisöohjautuv","ryhmä","porukka","työryhm","siilo","yhteispel"]},
+                keys:["tiimi","tiimin","itseohjautuv","yhteisöohjautuv","ryhmä","porukka","työryhm","siilo","yhteispel","yhteisty","työyhteisö","tiimityö","yksikön toimint","yhteistyön kehitt"]},
   vuorovaikutus:{label:"Vuorovaikutus ja konfliktit", service:"Yhteistyö- ja vuorovaikutusvalmennukset", owner:"maarit", peer:"tarja",
                 probe:"Kuinka pitkään tilanne on jatkunut, ja onko asiaa jo otettu puheeksi jollain tasolla?",
-                keys:["vuorovaikut","konflikt","riita","riite","puheeksiot","palautteen ant","kiusaa","ilmapiir","luottamuspul","klikki","erimielisyy","kärhäm","sovittelu"]},
+                keys:["vuorovaikut","konflikt","riita","riite","puheeksiot","palautteen ant","kiusaa","ilmapiir","luottamuspul","klikki","erimielisyy","kärhäm","sovittelu","viestin","keskustelukulttuur","kommunikaat","yhteistoiminta","luottamushenkil","neuvottel","ristiriit"]},
   hyvinvointi: {label:"Jaksaminen ja työhyvinvointi", service:"Työhyvinvoinnin kehittäminen", owner:"tarja", peer:"maarit",
                 probe:"Näkyykö kuormitus jo mittareissa, kuten sairauspoissaoloissa, vaihtuvuudessa tai henkilöstökyselyssä?",
-                keys:["jaksam","uupum","burnout","työhyvinvoin","sairauspoissaol","kuormit","stress","vaihtuvuus","väsy","työkyky","palautum"]},
+                keys:["jaksam","uupum","burnout","työhyvinvoin","sairauspoissaol","kuormit","stress","vaihtuvuus","väsy","työkyky","palautum","hyvinvoin","työkuorm","jaksa","työn imu","sairauslom","ylikuormit","uupu"]},
   kulttuuri:   {label:"Kulttuuri ja toimintatavat", service:"Organisaatio- ja johtamiskulttuurin kehittäminen", owner:"tarja", peer:"maarit",
                 probe:"Mikä kulttuurissa pitäisi olla vuoden päästä toisin, jotta huomaisitte sen arjessa?",
-                keys:["kulttuur","arvot","arvoj","toimintatav","identiteet","psykologinen turvallisuus","yhteinen suunta","asenne"]},
+                keys:["kulttuur","arvot","arvoj","toimintatav","identiteet","psykologinen turvallisuus","yhteinen suunta","asenne","johtamiskulttuur","toimintakulttuur","organisaatiokulttuur","arvot","sitoutu","motivaat","yhteinen suunt","organisaatio"]},
   muutos:      {label:"Muutos ja fasilitointi",   service:"Fasilitoinnit, mm. strategiaprosessi ja muutoksen läpivienti", owner:"maarit", peer:"tarja",
                 probe:"Missä vaiheessa muutos on: valmistelussa, juuri julkistettu vai jo käynnissä?",
-                keys:["muutos","muutok","fuusio","yrityskaupp","integraati","organisaatiomuutos","yt-neuvottel","yt neuvottel","strategi","fasilito","uudelleenjärjest","työpaj","suunnittelupäiv","kick","saneeraus"]},
+                keys:["muutos","muutok","fuusio","yrityskaupp","integraati","organisaatiomuutos","yt-neuvottel","yt neuvottel","strategi","fasilito","uudelleenjärjest","työpaj","suunnittelupäiv","kick","saneeraus","muutostilan","muutosjohtam","uudistu","yhdistym","jalkaut","kehittämispäiv","organisaation kehitt"]},
   hr:          {label:"HR ja People Operations",  service:"HR:n tuki / ulkoistettu HR", owner:"tarja", peer:"paula",
                 probe:"Onko kyse HR-prosessien rakentamisesta vai siitä, ettei nykyiselle HR:lle jää aikaa kehittämiseen?",
-                keys:["hr","henkilöstöhallin","people operations","hr-prosess","perehdyt","työsuhde","osaamisen kehittäm","henkilöstöasia","palkkaus","työsopimu"]},
+                keys:["hr","henkilöstöhallin","people operations","hr-prosess","perehdyt","työsuhde","osaamisen kehittäm","henkilöstöasia","palkkaus","työsopimu","henkilöstö","osaamis","työaika","palkitsem","suoritukse","hr-","people ops"]},
   rekry:       {label:"Rekrytointi",              service:"Rekrytoinnit", owner:"maiju", peer:"tarja",
                 probe:"Mihin rooliin haette, ja mikä nykyisessä hakuprosessissa on tuottanut pettymyksiä?",
-                keys:["rekry","rekrytoin","hakuprosess","headhunt","suorahaku","avainhenkilöhaku","työnantajamiel","hakija"]}
+                keys:["rekry","rekrytoin","hakuprosess","headhunt","suorahaku","avainhenkilöhaku","työnantajamiel","hakija","rekrytoi","haku","avainhenkilö"]}
 };
 
 /* ============================================================
@@ -907,6 +907,10 @@ function fairIndex(theme, len){
     localStorage.setItem(k, String(n + 1));
     return n % len;
   } catch(e){ return Math.floor(Math.random() * len); }
+}
+
+function allText(){
+  return [S.need, S.probe, S.scope, S.trigger, S.success].filter(Boolean).join(" ");
 }
 
 function detectTheme(text){
@@ -1415,7 +1419,8 @@ function renderBrief(){
   if (S.view === "client"){
     document.getElementById("briefTitle").textContent = "Tilannekuva";
     slotsEl.appendChild(slotRow("Tunnistettu tarve",
-      S.theme ? "<span class=\"tag\">"+esc(THEMES[S.theme].label)+"</span><br>"+esc(r.service) : ""));
+      S.theme ? "<span class=\"tag\">"+esc(THEMES[S.theme].label)+"</span><br>"+esc(r.service)
+              : (S.done ? esc(r.service) : "")));
     slotsEl.appendChild(slotRow("Tilanne", S.need ? esc(trunc(S.need,180)) : ""));
     slotsEl.appendChild(slotRow("Tarkennus", S.probe ? esc(trunc(S.probe,140)) : ""));
     slotsEl.appendChild(slotRow("Keitä koskee",
@@ -1427,11 +1432,12 @@ function renderBrief(){
     slotsEl.appendChild(slotRow("Päätöksenteko", S.decision ? esc(S.decision.power) : ""));
     if (S.done) slotsEl.appendChild(slotRow("Kiinnostaa eniten",
       S.pick ? "<span class=\"tag\">" + esc(S.pick.kind === "joker" ? "Jokerikortti" : "Agenssi") + "</span><br>" + esc(S.pick.title) : ""));
-    if (S.theme){
+    if (S.theme || S.done){
       var pr = el("div","slot filled");
       pr.appendChild(el("dt",null,"Kenelle ohjataan"));
       var dd = el("dd");
-      dd.innerHTML = "<div class=\"person\"><img src=\""+r.owner.img+"\" alt=\"\"><div><div class=\"nm\">"+esc(r.owner.name)+"</div><div class=\"rl\">"+esc(r.owner.role)+"</div></div></div>";
+      dd.innerHTML = "<div class=\"person\"><img src=\""+r.owner.img+"\" alt=\"\"><div><div class=\"nm\">"+esc(r.owner.name)+"</div><div class=\"rl\">"+esc(r.owner.role)+"</div></div></div>"
+        + (S.theme ? "" : "<div style=\"font-size:.8rem;color:var(--ink-3);margin-top:.35rem\">Alustava ehdotus: tarve tarkentuu ensimmäisessä keskustelussa.</div>");
       pr.appendChild(dd);
       slotsEl.appendChild(pr);
     }
@@ -1446,7 +1452,7 @@ function renderBrief(){
     hot.appendChild(hd);
     slotsEl.appendChild(hot);
 
-    slotsEl.appendChild(slotRow("Ehdotettu palvelu", S.theme ? esc(r.service) : ""));
+    slotsEl.appendChild(slotRow("Ehdotettu palvelu", (S.theme || S.done) ? esc(r.service) : ""));
     slotsEl.appendChild(slotRow("Kävijän valinta",
       S.pick ? esc(S.pick.kicker + ": " + S.pick.title)
              : (S.done ? "<span style=\"color:var(--ink-3)\">ei valinnut mitään kolmesta</span>" : "")));
@@ -1713,7 +1719,7 @@ function submit(text){
       S.needQuote = matchedPhrase(text, S.theme) || "";
       extra = harvest(text);
       break;
-    case "probe":    S.probe = text; if (!S.theme) S.theme = detectTheme(text); extra = harvest(text); break;
+    case "probe":    S.probe = text; extra = harvest(text); break;
     case "scope":    S.scope = text; if (S.headcount === null) S.headcount = parseHeadcount(text); extra = harvest(text); break;
     case "trigger":  S.trigger = text; extra = harvest(text); break;
     case "success":  S.success = text; extra = harvest(text); break;
@@ -1722,6 +1728,8 @@ function submit(text){
     case "decision": S.decision = parseDecision(text); break;
   }
 
+  /* Teema voi tarkentua vasta myöhemmistä vastauksista: päätellään aina koko kertymästä. */
+  if (!S.theme) S.theme = detectTheme(allText());
   renderBrief();
 
   think(function(){
@@ -1758,6 +1766,7 @@ function submit(text){
 }
 
 function finish(){
+  if (!S.theme) S.theme = detectTheme(allText());
   S.skipped = nextSlot(EXTRA) !== null || S.phase === "core";
   S.done = true;
   var r = routing();
