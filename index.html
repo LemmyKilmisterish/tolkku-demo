@@ -132,6 +132,7 @@ nav.main a.is-new{
   border-radius:var(--radius) var(--radius) 0 0;
 }
 .panel-bar .eyebrow{color:var(--ink-2)}
+.ai-note{margin:0;padding:.55rem 1rem;font-size:.82rem;line-height:1.4;color:var(--ink-2);background:rgba(33,8,20,.035);border-bottom:1px solid rgba(33,8,20,.08)}
 
 /* conversation */
 .stream{padding:1.35rem 1.25rem .5rem;min-height:19rem;max-height:min(62vh,540px);overflow-y:auto;scroll-behavior:smooth}
@@ -395,10 +396,10 @@ footer img{width:52px;margin-bottom:1rem}
           <h2>Tolkku</h2>
           <span class="badge">3 minuuttia</span>
         </div>
-        <p>Tolkku ei kehitä organisaatiotasi. Se kysyy kolme kysymystä, jotka agenssilainen kysyisi joka tapauksessa ymmärtääkseen, mikä teidän tilanteenne on ja mitä tarvitsette. Kirjoita tai puhu, omin sanoin.</p>
+        <p>Tolkku on tekoälyä hyödyntävä automaattinen palveluneuvoja, ei ihminen, eikä se kehitä organisaatiotasi. Se kysyy kolme kysymystä, jotka agenssilainen kysyisi joka tapauksessa ymmärtääkseen, mikä teidän tilanteenne on ja mitä tarvitsette. Kirjoita tai puhu, omin sanoin.</p>
       </div>
       <div>
-        <p style="font-size:.9rem">Kolmen kysymyksen jälkeen Tolkku kysyy luvan muutamaan tarkentavaan &mdash; ne saa myös ohittaa. Lopuksi lähetät tilannekuvan Agenssille. Tiedot eivät mene minnekään muualle.</p>
+        <p style="font-size:.9rem">Kolmen kysymyksen jälkeen Tolkku kysyy luvan muutamaan tarkentavaan &mdash; ne saa myös ohittaa. Lopuksi lähetät tilannekuvan Agenssille. Yhteystietosi menevät vain Agenssille; tekoäly näkee ainoastaan nimettömän tilannekuvauksen.</p>
       </div>
     </div>
 
@@ -409,6 +410,7 @@ footer img{width:52px;margin-bottom:1rem}
           <span class="eyebrow">Keskustelu</span>
           <button class="chip" id="voiceToggle" aria-pressed="false" title="Tolkku lukee kysymykset ääneen">Ääni pois</button>
         </div>
+        <p class="ai-note" id="aiNote" role="note">Keskustelet tekoälyavusteisen palveluneuvojan kanssa, et ihmisen. Jokaisen tilannekuvan lukee agenssilainen.</p>
         <div class="stream" id="stream" aria-live="polite"></div>
         <div class="composer">
           <div class="composer-row">
@@ -1081,7 +1083,7 @@ var S = {
   theme:null, need:"", needQuote:"", probe:"", scope:"", headcount:null,
   trigger:"", success:"", timeline:null, budget:null, decision:null, orgtype:null, orgtypeText:"",
   contact:{name:"",org:"",email:"",phone:""},
-  pick:null, solutionsId:null, rrIndex:null, rrKey:null,
+  pick:null, solutionsId:null, aiProposals:false, rrIndex:null, rrKey:null,
   asked:[], phase:"core", done:false, skipped:false, sent:false, view:"client", voice:false
 };
 
@@ -1374,6 +1376,10 @@ function renderProposals(){
     t.querySelector(".say").textContent = "Kolme alustavaa ehdotusta. Kaksi meiltä, yksi ilman meitä.";
     t.appendChild(el("div","note","Tunnistan vastauksistasi mahdollisia etenemispolkuja, mutta jokainen organisaatio on erilainen. Siksi varmistamme aina yhdessä, mikä ratkaisu palvelee tarpeitanne parhaiten. Jokerikortti on tarkoituksella jotain, mitä emme myy. Jos se riittää, ette tarvitse meitä. Valitse se, joka tuntuu lähimmältä, tai älä valitse mitään."));
     var list = setv || proposalSet();
+    S.aiProposals = !!setv;
+    t.appendChild(el("div","note", setv
+      ? "Nämä ehdotukset on muodostanut tekoäly vastaustesi pohjalta. Ne ovat alustavia, ja agenssilainen käy ne läpi kanssasi."
+      : "Ehdotukset on valittu automaattisesti vastaustesi pohjalta Agenssin valmiista palvelukuvauksista. Ne ovat alustavia."));
     /* LLM-polku lokitettiin jo palvelimella /api/solutions-kutsussa;
        fallback-polusta lähetetään tilannekuva ja näytetyt kortit tässä. */
     if (!setv){
@@ -1716,6 +1722,7 @@ function body(internal){
     L.push("");
     L.push("KÄVIJÄN VALINTA");
     L.push("  " + S.pick.kicker + ": " + S.pick.title);
+    L.push("  (" + (S.aiProposals ? "tekoälyn muodostama ehdotus" : "valmis palvelukuvaus, automaattinen valinta") + ")");
   }
   L.push("");
   L.push("RAAMIT");
@@ -1986,7 +1993,7 @@ function start(seed){
     theme:seed || null, need:"", needQuote:"", probe:"", scope:"", headcount:null,
     trigger:"", success:"", timeline:null, budget:null, decision:null, orgtype:null, orgtypeText:"",
     contact:{name:"",org:"",email:"",phone:""},
-    pick:null, solutionsId:null, rrIndex:null, rrKey:null,
+    pick:null, solutionsId:null, aiProposals:false, rrIndex:null, rrKey:null,
     asked:[], phase:"core", done:false, skipped:false, sent:false, view:S ? S.view : "client", voice:S ? S.voice : false
   };
   stream.innerHTML = "";
