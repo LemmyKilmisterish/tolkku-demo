@@ -559,7 +559,7 @@ var ROUTING_TABLE = {
     hyvinvointi:  ["tarja","maarit","paula","maiju"],   /* KAIKKI: työhyvinvointi */
     kulttuuri:    ["paula","tarja"],                    /* organisaatiokulttuurin kehittäminen */
     muutos:       ["maarit","paula"],                   /* strategiatyö, muutos; fasilitointi kaikilla */
-    hr:           ["tarja","paula"],                    /* HR-ulkoistus, interim HR, HR-sparraus */
+    hr:           ["tarja","paula"],                    /* interim HR, HR-sparraus, HR-kartoitus */
     rekry:        ["paula","tarja"]
   },
   /* asiakastyyppi -> kenelle ensisijaisesti (yritys ja muu: kaikille) */
@@ -588,7 +588,7 @@ var THEMES = {
                 keys:["tiimi","tiimin","itseohjautuv","yhteisöohjautuv","ryhmä","porukka","työryhm","siilo","yhteispel","yhteisty","työyhteisö","tiimityö","yksikön toimint","yhteistyön kehitt"]},
   vuorovaikutus:{label:"Vuorovaikutus ja konfliktit", service:"Yhteistyö- ja vuorovaikutusvalmennukset", owner:"maarit", peer:"tarja",
                 probe:"Kuinka pitkään tilanne on jatkunut, ja onko asiaa jo otettu puheeksi jollain tasolla?",
-                keys:["vuorovaikut","konflikt","riita","riite","puheeksiot","palautteen ant","kiusaa","ilmapiir","luottamuspul","klikki","erimielisyy","kärhäm","sovittelu","viestin","keskustelukulttuur","kommunikaat","yhteistoiminta","luottamushenkil","neuvottel","ristiriit"]},
+                keys:["vuorovaikut","konflikt","riita","riite","puheeksiot","palautteen ant","kiusaa","ilmapiir","luottamuspul","klikki","erimielisyy","kärhäm","sovittelu","viestin","keskustelukulttuur","kommunikaat","yhteistoiminta","luottamushenkil","neuvottel","ristiriit","tulehtu","eivät puhu","ei puhu toisi","riidoi","välit ovat","eivät tule toimeen","kaksi leiri"]},
   hyvinvointi: {label:"Jaksaminen ja työhyvinvointi", service:"Työhyvinvoinnin kehittäminen", owner:"tarja", peer:"maarit",
                 probe:"Näkyykö kuormitus jo mittareissa, kuten sairauspoissaoloissa, vaihtuvuudessa tai henkilöstökyselyssä?",
                 keys:["jaksam","uupum","burnout","työhyvinvoin","sairauspoissaol","kuormit","stress","vaihtuvuus","väsy","työkyky","palautum","hyvinvoin","työkuorm","jaksa","työn imu","sairauslom","ylikuormit","uupu"]},
@@ -598,10 +598,10 @@ var THEMES = {
   muutos:      {label:"Muutos ja fasilitointi",   service:"Fasilitoinnit, mm. strategiaprosessi ja muutoksen läpivienti", owner:"maarit", peer:"tarja",
                 probe:"Missä vaiheessa muutos on: valmistelussa, juuri julkistettu vai jo käynnissä?",
                 keys:["muutos","muutok","fuusio","yrityskaupp","integraati","organisaatiomuutos","yt-neuvottel","yt neuvottel","strategi","fasilito","uudelleenjärjest","työpaj","suunnittelupäiv","kick","saneeraus","muutostilan","muutosjohtam","uudistu","yhdistym","jalkaut","kehittämispäiv","organisaation kehitt"]},
-  hr:          {label:"HR ja People Operations",  service:"HR:n tuki / ulkoistettu HR", owner:"tarja", peer:"paula",
+  hr:          {label:"HR ja People Operations",  service:"HR-sparraus ja Interim HR", owner:"tarja", peer:"paula",
                 probe:"Onko kyse HR-prosessien rakentamisesta vai siitä, ettei nykyiselle HR:lle jää aikaa kehittämiseen?",
                 keys:["hr","henkilöstöhallin","people operations","hr-prosess","perehdyt","työsuhde","osaamisen kehittäm","henkilöstöasia","palkkaus","työsopimu","henkilöstö","osaamis","työaika","palkitsem","suoritukse","hr-","people ops"]},
-  rekry:       {label:"Rekrytointi",              service:"Rekrytoinnit", owner:"maiju", peer:"tarja",
+  rekry:       {label:"Rekrytointi",              service:"Rekrytoinnin tuki osana HR-palveluita", owner:"maiju", peer:"tarja",
                 probe:"Mihin rooliin haette, ja mikä nykyisessä hakuprosessissa on tuottanut pettymyksiä?",
                 keys:["rekry","rekrytoin","hakuprosess","headhunt","suorahaku","avainhenkilöhaku","työnantajamiel","hakija","rekrytoi","haku","avainhenkilö"]}
 };
@@ -609,310 +609,412 @@ var THEMES = {
 /* ============================================================
    RATKAISUEHDOTUKSET — kaksi Agenssin polkua ja yksi jokerikortti.
 
+   Kortit vastaavat Agenssin ratkaisuavaruutta (aineisto/ratkaisuavaruus.yaml,
+   kuitattu 2.10.2026) ja valinta päättelysääntöjä (aineisto/paattelysaannot.md,
+   Tarjan korjaukset 2.10.2026). Tämä on staattinen varapolku; palvelin tekee
+   saman päättelyn kielimallilla koko aineistosta.
+
    Jokerikortti on tarkoituksella jotain, mitä Agenssi ei myy.
-   Useimmiten se on ilmainen kokeilu, jonka asiakas voi tehdä itse.
-   Jos se riittää, hän ei tarvitse meitä – ja se on rehellinen vastaus.
    ============================================================ */
 
-var SOLUTIONS = {
-
-  esihenkilo: {
-    primary: {
-      title:"Esihenkilövalmennus ohjelmana",
-      fit:"Koko esihenkilöjoukko saa saman kielen ja samat käytännöt, ei jokainen omaansa.",
-      what:["Neljä lähipäivää, joiden välissä harjoitellaan omilla, oikeilla tilanteilla.",
-            "Vaikea keskustelu käydään ääneen läpi, ei luennoida siitä.",
-            "Vertaisryhmä jatkaa ohjelman jälkeen ilman meitä."],
-      scale:"Ryhmäkoko 8–14 · 3–5 kk"
-    },
-    alt: {
-      title:"Johto ensin, esihenkilöt sitten",
-      fit:"Jos esihenkilöt eivät puutu, syy on usein se, ettei kukaan ole sanonut että pitäisi.",
-      what:["Puolen päivän linjaus johdolle: mitä esihenkilöiltä oikeasti odotetaan.",
-            "Yksilöcoaching 3–4 avainesihenkilölle, joiden esimerkki ratkaisee muiden puolesta.",
-            "Laajennetaan vasta kun ylätaso on selvä."],
-      scale:"Kevyempi aloitus · 6–8 vk"
-    },
-    joker: {
-      title:"Kokeilkaa ensin ilman meitä",
-      fit:"Iso osa ”ei uskalleta puuttua” -ongelmasta on itse asiassa ”ei ole rakennetta, jossa puuttuminen olisi luontevaa”.",
-      what:["Jokaiselle esihenkilölle 20 minuutin viikoittainen kahdenkeskinen jokaisen tiimiläisen kanssa. Ei agendaa.",
-            "Kahdeksan viikkoa putkeen, ei yhtään peruttua.",
-            "Sen jälkeen kysykää uudestaan, onko valmennukselle tarvetta."],
-      scale:"Maksaa vain kalenteritilaa"
-    }
-  },
-
-  johtoryhma: {
-    primary: {
-      title:"Johtoryhmävalmennus",
-      fit:"Työstetään sitä, miten te teette päätöksiä yhdessä – ei sitä, mitä päätätte.",
-      what:["Kaksi tai kolme työskentelyä, joissa käsitellään teidän omia auki olevia asioitanne.",
-            "Rooli- ja odotuskeskustelu, joka on yleensä käymättä.",
-            "Konkreettinen sopimus siitä, mikä ratkaistaan missäkin."],
-      scale:"5–10 hlö · 2–4 kk"
-    },
-    alt: {
-      title:"Yksilöcoaching rinnakkain",
-      fit:"Ryhmän ongelma on toisinaan kahden ihmisen ongelma, jota koko ryhmä joutuu katsomaan.",
-      what:["Jokaiselle johtoryhmän jäsenelle omat coaching-kerrat.",
-            "Yhteinen purku vasta sen jälkeen, kun jokainen on saanut ajatella rauhassa.",
-            "Herkkä tilanne käsitellään ensin kahden kesken, ei pöydän ympärillä."],
-      scale:"Luottamuksellinen · 3–5 kertaa"
-    },
-    joker: {
-      title:"Vaihtakaa kokouksen järjestys",
-      fit:"Moni johtoryhmä ei kärsi luottamuspulasta vaan agendasta, jossa päätösasiat ovat viimeisenä.",
-      what:["Tiedotusasiat kirjallisena etukäteen, ei koskaan kokouksessa.",
-            "Päätösasiat ensimmäisenä, kun ihmiset ovat vielä terävinä.",
-            "Jokainen päätös kirjataan yhdellä rivillä: mitä, kuka, mihin mennessä."],
-      scale:"Voimaan ensi maanantaina"
-    }
-  },
-
-  coaching: {
-    primary: {
-      title:"Yksilöcoaching",
-      fit:"Oma ajattelu kirkastuu nopeimmin, kun sitä haastaa joku, jolla ei ole asiassa osaa eikä arpaa.",
-      what:["5–8 tapaamista, väli 2–4 viikkoa.",
-            "Tavoite sovitaan alussa myös työnantajan kanssa, sisältö ei koskaan.",
-            "Luottamuksellisuus on ehdoton, muuten työ ei toimi."],
-      scale:"1 hlö · 4–6 kk"
-    },
-    alt: {
-      title:"Ryhmäcoaching vertaisten kanssa",
-      fit:"Toisen samassa tilanteessa olevan kysymys osuu usein tarkemmin kuin konsultin.",
-      what:["4–6 hengen ryhmä, samankaltainen rooli, eri yksiköt.",
-            "Jokaisella kerralla yhden osallistujan oikea tilanne käsittelyssä.",
-            "Halvempi per henkilö ja jättää jälkeensä verkoston."],
-      scale:"4–6 hlö · 5 kertaa"
-    },
-    joker: {
-      title:"Vertaispari talon sisältä",
-      fit:"Ennen kuin ostatte coachin, kokeilkaa halvinta versiota siitä.",
-      what:["Kaksi ihmistä eri yksiköistä, tunti kahden viikon välein, vuorotellen kumpi puhuu.",
-            "Kuuntelijan ainoa tehtävä on kysyä, ei neuvoa.",
-            "Kolme kuukautta. Jos se ei riitä, tiedätte ainakin mihin tarvitsette ulkopuolista."],
-      scale:"Ei kustannusta"
-    }
-  },
-
-  tiimi: {
-    primary: {
-      title:"Tiimivalmennus",
-      fit:"Tiimi löytää oman tapansa työskennellä yhdessä – ei meidän mallimme, vaan sen joka kestää arjessa.",
-      what:["Nykytilan purku niin, että hankalatkin asiat sanotaan ääneen.",
-            "Yhteiset pelisäännöt, jotka tiimi kirjoittaa itse.",
-            "Seurantatapaaminen 2–3 kk päästä, koska siinä kohtaa asiat yleensä valuvat takaisin."],
-      scale:"1–2 tiimiä · 2–4 kk"
-    },
-    alt: {
-      title:"Esihenkilö ensin, tiimi sitten",
-      fit:"Tiimin toimimattomuus on yllättävän usein johtamisen kysymys, ei tiimin.",
-      what:["Coaching tiimin vetäjälle ennen kuin tiimiä kootaan yhteen.",
-            "Vasta sitten yhteinen työskentely, jossa vetäjä on valmis kuulemaan.",
-            "Säästää tiimiltä yhden turhan kierroksen."],
-      scale:"Kevyt aloitus · 6–8 vk"
-    },
-    joker: {
-      title:"Tehkää työ näkyväksi",
-      fit:"Moni tiimiristiriita on oikeasti erimielisyys siitä, kuka tekee mitä – ei ihmisistä.",
-      what:["Yksi yhteinen taulu, jossa näkyy kaikki kesken oleva työ ja kenellä se on.",
-            "Kymmenen minuutin päivittäinen katsaus siihen tauluun.",
-            "Neljä viikkoa. Katsokaa sen jälkeen, mikä kitka oli ihmisissä ja mikä epäselvyydessä."],
-      scale:"Ilmainen · 4 vk kokeilu"
-    }
-  },
-
-  vuorovaikutus: {
-    primary: {
-      title:"Puheeksioton valmennus",
-      fit:"Harjoitellaan sitä yhtä asiaa, jota kaikki välttelevät: hankalan asian sanomista ajoissa.",
-      what:["Omat, oikeat tilanteet harjoituksina – ei keksittyjä caseja.",
-            "Sanamuodot mietitään ääneen ja kokeillaan turvallisesti.",
-            "Jokainen lähtee mukanaan yksi keskustelu, jonka aikoo oikeasti käydä."],
-      scale:"8–16 hlö · 2–3 päivää"
-    },
-    alt: {
-      title:"Työyhteisösovittelu",
-      fit:"Jos tilanne on jo lukossa kahden ihmisen tai kahden porukan välillä, valmennus tulee liian myöhään.",
-      what:["Ulkopuolinen sovittelija, selkeä rakenne, sovittu lopputulos.",
-            "Osapuolet tapaavat ensin erikseen, sitten yhdessä.",
-            "Lopuksi kirjallinen sopimus siitä, miten jatketaan."],
-      scale:"Rajattu · 3–6 vk"
-    },
-    joker: {
-      title:"Kirjoittakaa yksi A4",
-      fit:"Ennen valmennusta kannattaa katsoa, onko teillä ylipäätään sovittu miten erimielisyys otetaan puheeksi.",
-      what:["Tiimi kirjoittaa itse yhden sivun: miten sanomme jos jokin ärsyttää, ja kenelle.",
-            "Ei arvoja eikä julistuksia – vain kolme konkreettista sääntöä.",
-            "Palataan siihen kuukauden päästä ja korjataan mikä ei toiminut."],
-      scale:"Yksi työpaja, tekin osaatte"
-    }
-  },
-
-  hyvinvointi: {
-    primary: {
-      title:"Työhyvinvoinnin kehittäminen",
-      fit:"Kuormitus puretaan siitä päästä, jossa se syntyy: työn järjestämisestä, ei jaksamisvinkeistä.",
-      what:["Nykytilan selvitys niin, että syyt erotetaan oireista.",
-            "Työskentely esihenkilöiden ja tiimien kanssa siitä, mikä työ jää tekemättä.",
-            "Konkreettiset muutokset arkeen, ei suositusraportti."],
-      scale:"Yksikkötaso · 3–6 kk"
-    },
-    alt: {
-      title:"Esihenkilöiden kuormituskeskustelut",
-      fit:"Jos uupumus on jo pitkällä, kevyin ja nopein liike on antaa esihenkilöille taito ja lupa keventää työtä.",
-      what:["Valmennus siihen, miten kuormituksesta puhutaan ennen kuin se on sairauspoissaolo.",
-            "Yksilöcoaching niille esihenkilöille, jotka ovat itse loppu.",
-            "Selkeä raja siihen, mikä kuuluu työterveydelle."],
-      scale:"Nopea aloitus · 4–8 vk"
-    },
-    joker: {
-      title:"Mitatkaa ennen kuin korjaatte",
-      fit:"Työhyvinvointihanke ilman lukuja on arvaus. Luvut saa ilmaiseksi ja neljässä viikossa.",
-      what:["Neljän viikon kalenteri- ja työmääräpoiminta: mihin aika oikeasti menee.",
-            "Sairauspoissaolot ja vaihtuvuus yksiköittäin, ei koko talon keskiarvona.",
-            "Työterveyshuolto istumaan saman pöydän ääreen – se on jo maksettu."],
-      scale:"Ei kustannusta · 4 vk"
-    }
-  },
-
-  kulttuuri: {
-    primary: {
-      title:"Kulttuurin kehittäminen prosessina",
-      fit:"Kulttuuri ei muutu julistuksella vaan siitä, mitä arjessa aletaan tehdä toisin.",
-      what:["Nykyisen kulttuurin sanoittaminen rehellisesti, myös se osa jota ei mielellään sanota.",
-            "Muutama konkreettinen käyttäytymismuutos, jotka johto tekee ensin.",
-            "Seuranta, koska tämä on se kohta jossa kulttuurihankkeet yleensä kuolevat."],
-      scale:"Koko organisaatio · 6–12 kk"
-    },
-    alt: {
-      title:"Johtamiskulttuuri ensin",
-      fit:"Organisaatiokulttuuri on pitkälti johtamiskulttuurin heijastus. Pienempi pinta, nopeampi vaikutus.",
-      what:["Työskentely johdon ja esihenkilöiden kanssa, ei koko talon kanssa.",
-            "Yhteinen sopimus siitä, mitä johtaminen täällä tarkoittaa.",
-            "Laajennetaan vasta kun se pitää."],
-      scale:"Rajattu joukko · 3–5 kk"
-    },
-    joker: {
-      title:"Lopettakaa yksi asia",
-      fit:"Kulttuuri kertoo mitä täällä oikeasti arvostetaan. Nopein testi on katsoa mitä uskallatte lopettaa.",
-      what:["Kysykää jokaiselta yksi asia, joka voisi jäädä tekemättä ilman että kukaan huomaa.",
-            "Valitkaa niistä yksi ja lopettakaa se näkyvästi.",
-            "Se kertoo kulttuuristanne enemmän kuin mikään arvotyöpaja."],
-      scale:"Yksi kysymys, yksi päätös"
-    }
-  },
-
-  muutos: {
-    primary: {
-      title:"Muutoksen fasilitointi",
-      fit:"Ulkopuolinen pitää fokuksen kirkkaana silloin, kun teillä on liian suuri intressi lopputulokseen.",
-      what:["Rakenne ja menetelmä vaikeiden kysymysten läpikäymiseen.",
-            "Työskentelyt, joissa sisällön ratkaisette te – me pidämme huolen että ne ratkaistaan.",
-            "Kirjattu jälki siitä, mitä sovittiin ja kuka vie eteenpäin."],
-      scale:"2–5 työskentelyä · 2–6 kk"
-    },
-    alt: {
-      title:"Tuki esihenkilöille muutoksen ajan",
-      fit:"Muutos kaatuu harvoin suunnitelmaan. Se kaatuu siihen, että esihenkilöt jäävät yksin viemään sen läpi.",
-      what:["Lyhyt valmennus siihen, miten muutoksesta puhutaan kun vastauksia ei vielä ole.",
-            "Vertaisryhmä esihenkilöille muutoksen ajaksi.",
-            "Coaching niille, joiden oma asema on kysymysmerkki."],
-      scale:"Rinnalla kulkeva · muutoksen ajan"
-    },
-    joker: {
-      title:"Viestintärytmi ennen kaikkea muuta",
-      fit:"Suurin osa muutosahdistuksesta on tiedon epäsäännöllisyyttä, ei tiedon puutetta.",
-      what:["Sama tieto samaan aikaan kaikille, joka viikko samana päivänä.",
-            "Myös silloin kun ei ole uutta kerrottavaa – varsinkin silloin.",
-            "Yksi nimetty ihminen, joka vastaa siitä että se lähtee."],
-      scale:"Ilmainen · alkaa heti"
-    }
-  },
-
-  hr: {
-    primary: {
-      title:"Ulkoistettu HR / People Operations",
-      fit:"Saatte kokeneen HR-ammattilaisen siihen osuuteen viikosta, joka teillä oikeasti on.",
-      what:["Sovittu tuntimäärä kuukaudessa, ei kokoaikaista rekrytointia.",
-            "Alkaa siitä mikä palaa, jatkuu siihen mikä pitäisi rakentaa.",
-            "Voi loppua tai kasvaa sen mukaan, mihin suuntaan te menette."],
-      scale:"Jatkuva · kuukausiperusteinen"
-    },
-    alt: {
-      title:"HR:n tuki ja sparraus",
-      fit:"Jos teillä on jo HR-ihminen, hän ei ehkä tarvitse lisäkäsiä vaan jonkun jonka kanssa ajatella.",
-      what:["Säännöllinen sparraus HR-vastaavalle tai HR:stä vastaavalle johtajalle.",
-            "Käsipari yksittäisiin projekteihin: perehdytysmalli, osaamisen kehittäminen, prosessit.",
-            "Kevyempi ja halvempi kuin ulkoistaminen."],
-      scale:"Kevyt · 1–2 kertaa/kk"
-    },
-    joker: {
-      title:"Automatisoikaa ennen kuin ostatte ihmistä",
-      fit:"Osa HR-työstä ei tarvitse asiantuntijaa vaan järjestelmän. Se kannattaa selvittää ensin.",
-      what:["Listatkaa kuukauden ajan kaikki HR-tehtävät ja niihin kulunut aika.",
-            "Merkitkää mikä toistuu joka kerta samanlaisena – se on työkalun, ei ihmisen työtä.",
-            "Vasta jäljelle jäävä osuus kertoo, mitä osaamista todella tarvitsette."],
-      scale:"Yksi kuukausi, yksi taulukko"
-    }
-  },
-
-  rekry: {
-    primary: {
-      title:"Rekrytointi kumppanina",
-      fit:"Hoidamme haun alusta loppuun ja tunnemme sen jälkeen organisaationne, jos tulee toinen haku.",
-      what:["Tehtävän ja odotusten kirkastaminen ennen kuin ilmoitus kirjoitetaan.",
-            "Haku, seulonta ja haastattelut sovitulla vastuunjaolla.",
-            "Perehdytyksen ensimmäiset viikot mietitään mukaan, ei jälkikäteen."],
-      scale:"Yksi rooli · 6–10 vk"
-    },
-    alt: {
-      title:"Tuki teidän omaan hakuunne",
-      fit:"Jos hoidatte haun itse, kalleimmat virheet tehdään yleensä alussa ja lopussa.",
-      what:["Tehtävänkuvan ja hakuilmoituksen sparraus.",
-            "Haastattelurunko ja arviointikriteerit, jotka kestävät vertailun.",
-            "Mukana loppusuoran haastatteluissa, jos haluatte toisen näkemyksen."],
-      scale:"Rajattu · muutama päivä"
-    },
-    joker: {
-      title:"Korjatkaa läpimenoaika ensin",
-      fit:"Yleisin syy hyvän hakijan menettämiseen ei ole huono haku vaan hidas prosessi.",
-      what:["Mitatkaa kuinka monta päivää kuluu hakemuksesta ensimmäiseen yhteydenottoon.",
-            "Jos se on yli kolme, korjatkaa se ennen kuin ostatte mitään.",
-            "Kysykää viimeksi valitsematta jääneiltä, miltä prosessi tuntui."],
-      scale:"Ei kustannusta · kertaluonteinen"
-    }
-  },
-
-  _default: {
-    primary: {
-      title:"Tarvekartoitus keskusteluna",
-      fit:"Kun tilanne on vielä auki, ensimmäinen työ on saada se sanotuksi tarkasti.",
-      what:["Yksi keskustelu, jossa haetaan varsinainen kysymys esiin.",
-            "Ehdotus siitä, mitä kannattaa tehdä ja missä järjestyksessä.",
-            "Ei sitoumusta jatkosta."],
-      scale:"Yksi tapaaminen"
-    },
-    alt: {
-      title:"Kevyt nykytilan selvitys",
-      fit:"Jos tilanteesta on eri käsityksiä eri puolilla taloa, kannattaa ensin selvittää mistä puhutaan.",
-      what:["Muutama haastattelu eri puolilta organisaatiota.",
-            "Tiivis yhteenveto siitä, mikä toistuu ja mikä on yhden ihmisen näkemys.",
-            "Vasta sen jälkeen päätös siitä, tarvitaanko kehittämistä."],
-      scale:"2–3 viikkoa"
-    },
-    joker: {
-      title:"Kysykää ensin viideltä ihmiseltä",
-      fit:"Ennen kuin ostatte selvitystä, tehkää halvin versio siitä itse.",
-      what:["Viisi ihmistä eri puolilta taloa, sama kysymys jokaiselle: mikä täällä on rikki?",
-            "Kirjoittakaa vastaukset muuttamatta niitä kauniimmiksi.",
-            "Jos vastaukset ovat samat, tiedätte jo mitä tehdä."],
-      scale:"Viikko ja viisi kahvia"
-    }
-  }
+var CARDS = {
+ "esihenkilo_ryhma": {
+  "title": "Esihenkilövalmennus ryhmälle",
+  "fit": "Koko esihenkilöjoukko saa saman kielen ja samat käytännöt, ei jokainen omaansa.",
+  "what": [
+   "Suunnittelupalaveri, jossa sisältö tarkennetaan teidän tilanteeseenne.",
+   "Kolme tai neljä neljän tunnin valmennusta, välissä tehtävät omilla oikeilla tilanteilla.",
+   "Vaikea keskustelu käydään ääneen läpi, ei luennoida siitä."
+  ],
+  "scale": "3–4 x 4 h · välitehtävät"
+ },
+ "tasmaisku": {
+  "title": "Täsmäisku valmentavaan johtamiseen",
+  "fit": "Kun valmentava johtaminen on tuttu ajatuksena mutta ei näy arjessa.",
+  "what": [
+   "Kolme neljän tunnin valmennusta noin kuukauden välein.",
+   "Kuuntelu, kysymykset ja palaute harjoitellaan tekemällä.",
+   "Kevyempi kuin koko valmennusohjelma, sopii myös jatkoksi aiemmalle."
+  ],
+  "scale": "3 x 4 h · noin 3 kk"
+ },
+ "avoin_esihenkilo": {
+  "title": "Avoin esihenkilövalmennus",
+  "fit": "Yksi tai muutama esihenkilö saa vertaisryhmän muista organisaatioista.",
+  "what": [
+   "Viisi neljän tunnin tapaamista noin kuukauden välein, pienryhmä.",
+   "Vastuut ja velvollisuudet, puheeksiotto, kehityskeskustelut, muutoksen johtaminen.",
+   "Tavoitteet tarkennetaan osallistujien kanssa alussa."
+  ],
+  "scale": "5 x 4 h · avoin ryhmä"
+ },
+ "yksilocoaching": {
+  "title": "Yksilöcoaching",
+  "fit": "Oma ajattelu kirkastuu nopeimmin, kun sitä haastaa joku, jolla ei ole asiassa osaa eikä arpaa.",
+  "what": [
+   "Viisi tai kuusi työskentelyä, vähintään kerran kuussa.",
+   "Tavoite sovitaan alussa myös esihenkilön kanssa, sisältö on luottamuksellinen.",
+   "Toimitusjohtajalle määrä sovitaan erikseen tarpeen mukaan."
+  ],
+  "scale": "5–6 kertaa · 5–8 kk"
+ },
+ "ryhmacoaching": {
+  "title": "Ryhmäcoaching",
+  "fit": "Toisen samassa tilanteessa olevan kysymys osuu usein tarkemmin kuin konsultin.",
+  "what": [
+   "Kolmesta kahdeksaan hengen ryhmä.",
+   "Kuudesta kymmeneen tapaamista, puolitoista tai kaksi tuntia kerrallaan.",
+   "Koko ryhmän tiedot ja taidot yhteiseen käyttöön, uusista toimintatavoista sovitaan yhdessä."
+  ],
+  "scale": "3–8 hlö · 6–10 kertaa"
+ },
+ "johtoryhmatyo": {
+  "title": "Johtoryhmätyöskentelyn kehittäminen",
+  "fit": "Työstetään sitä, miten te teette päätöksiä yhdessä, ei sitä, mitä päätätte.",
+  "what": [
+   "Jokaisen jäsenen yksilöhaastattelu, tunti kerrallaan.",
+   "Konsultin yhteenveto ja kaksi tai kolme työpajaa.",
+   "Puheenjohtajan konsultaatio lopuksi."
+  ],
+  "scale": "Haastattelut + 2–3 työpajaa"
+ },
+ "avoin_johtaminen": {
+  "title": "Strateginen vaikuttaja tai Vaikuttava johtaminen",
+  "fit": "Jos kehittyä haluaa yksi tai kaksi johtajaa eikä koko ryhmä, avoin valmennus on kevyempi tie.",
+  "what": [
+   "Avoin pienryhmä kokeneille johtajille eri organisaatioista.",
+   "Kolme tai neljä kolmen tunnin valmennusta.",
+   "Päätösprosessit, strategiasta viestiminen, haastavat neuvottelutilanteet."
+  ],
+  "scale": "3–4 x 3 h · avoin ryhmä"
+ },
+ "sovittelu": {
+  "title": "Työyhteisösovittelu",
+  "fit": "Kun ristiriidalla on osapuolet, valmennus tulee liian aikaisin. Ensin puretaan tilanne.",
+  "what": [
+   "Infotilaisuus asianosaisille ja esihenkilöille.",
+   "Yksilöhaastattelut, sitten yhteiskeskustelut sovittelijan johdolla.",
+   "Kirjallinen sopimus siitä, miten jatketaan, ja seuranta parin kuukauden päästä."
+  ],
+  "scale": "Rajattu prosessi · seuranta 2–3 kk"
+ },
+ "tiimi_jalkeen": {
+  "title": "Tiimivalmennus, kun tilanne on purettu",
+  "fit": "Yhteisiä pelisääntöjä kannattaa rakentaa vasta, kun tulehtunut tilanne ei enää vie kaikkea tilaa.",
+  "what": [
+   "Nykytilan purku niin, että hankalatkin asiat sanotaan ääneen.",
+   "Pelisäännöt, jotka tiimi kirjoittaa itse.",
+   "Seurantatapaaminen 2–3 kk päästä."
+  ],
+  "scale": "Sovittelun jälkeen · 2–4 kk"
+ },
+ "tiimivalmennus": {
+  "title": "Tiimivalmennus",
+  "fit": "Tiimi löytää oman tapansa työskennellä yhdessä, sen joka kestää arjessa.",
+  "what": [
+   "Nykytilan purku niin, että hankalatkin asiat sanotaan ääneen.",
+   "Yhteiset pelisäännöt, jotka tiimi kirjoittaa itse.",
+   "Seurantatapaaminen 2–3 kk päästä, koska siinä kohtaa asiat yleensä valuvat takaisin."
+  ],
+  "scale": "1–2 tiimiä · 2–4 kk"
+ },
+ "fasilitoitu_tyopaja": {
+  "title": "Fasilitoitu työpaja",
+  "fit": "Yksi hyvin vedetty työskentely näyttää, onko kyse yhteistyöstä vai jostain muusta.",
+  "what": [
+   "Kahdesta ja puolesta seitsemään ja puoleen tuntia.",
+   "Fasilitaattori kuljettaa prosessia, sisällön luotte te.",
+   "Mieluummin kaksi lyhyttä kertaa kuin yksi pitkä."
+  ],
+  "scale": "2,5–7,5 h per kerta"
+ },
+ "puheeksiotto": {
+  "title": "Puheeksiottovalmennus",
+  "fit": "Harjoitellaan sitä yhtä asiaa, jota kaikki välttelevät: hankalan asian sanomista ajoissa.",
+  "what": [
+   "Omat, oikeat tilanteet harjoituksina, ei keksittyjä caseja.",
+   "Varhaisen puuttumisen menetelmät ja teidän omat mallinne käyttöön.",
+   "Esihenkilöille, HR:lle ja työsuojelulle."
+  ],
+  "scale": "6–18 hlö · valmennuspäivä"
+ },
+ "hyvinvointi_kartoitus": {
+  "title": "Kartoitus ennen toimenpiteitä",
+  "fit": "Kun syytä ei ole vielä nimetty, ensimmäinen työ on erottaa syyt oireista.",
+  "what": [
+   "Haastattelut tai kysely, jossa selvitetään mistä kuormitus syntyy.",
+   "Yhteenveto johdolle: mikä toistuu ja mikä on yksittäistä.",
+   "Vasta sen jälkeen päätös siitä, mitä kehitetään."
+  ],
+  "scale": "Kartoitus · 3–6 vk"
+ },
+ "kuormituskeskustelut": {
+  "title": "Esihenkilöiden kuormituskeskustelut",
+  "fit": "Kevyin ja nopein liike on antaa esihenkilöille taito ja lupa keventää työtä.",
+  "what": [
+   "Valmennus siihen, miten kuormituksesta puhutaan ennen kuin se on sairauspoissaolo.",
+   "Yksilöcoaching niille esihenkilöille, jotka ovat itse loppu.",
+   "Selkeä raja siihen, mikä kuuluu työterveydelle."
+  ],
+  "scale": "Nopea aloitus · 4–8 vk"
+ },
+ "kulttuuri_yhdistelma": {
+  "title": "Kulttuurityö kolmella tasolla",
+  "fit": "Kulttuuri ei muutu yhdellä työpajalla vaan siitä, mitä johto, esihenkilöt ja koko talo alkavat tehdä toisin.",
+  "what": [
+   "Johdon yksilöcoachingit.",
+   "Johdon ja esihenkilöiden työpajat.",
+   "Koko henkilöstön yhteinen tilaisuus, jossa suunta tehdään näkyväksi."
+  ],
+  "scale": "Koko organisaatio · 6–12 kk"
+ },
+ "tavoiteroolikartta": {
+  "title": "Johtamisen tavoiteroolikartta",
+  "fit": "Kun pitää ensin sanoa ääneen, millaista johtamista täällä arvostetaan.",
+  "what": [
+   "Kiteytetään tehtävän tärkeimmät roolit nyt ja lähivuosina.",
+   "Käyttöön 360-palautteessa ja kehityskeskusteluissa.",
+   "Roolit ovat kehitettäviä toimintatapoja, eivät persoonallisuutta."
+  ],
+  "scale": "Rajattu joukko · 2–4 kk"
+ },
+ "muutos_tyopajat": {
+  "title": "Fasilitoidut työpajat muutoksen läpivientiin",
+  "fit": "Ulkopuolinen pitää fokuksen kirkkaana silloin, kun teillä on liian suuri intressi lopputulokseen.",
+  "what": [
+   "Työskentelyt, joissa sisällön ratkaisette te ja me pidämme huolen, että ne ratkaistaan.",
+   "Kirjattu jälki siitä, mitä sovittiin ja kuka vie eteenpäin.",
+   "Coaching avainhenkilöille muutoksen tueksi lisäoptiona."
+  ],
+  "scale": "2–5 työpajaa · 2–6 kk"
+ },
+ "osallistamisvalmennus": {
+  "title": "Osallistamisvalmennus johdolle ja esihenkilöille",
+  "fit": "Muutos kaatuu harvoin suunnitelmaan. Se kaatuu siihen, ettei ihmisiä otettu mukaan.",
+  "what": [
+   "Kaksi neljän tunnin valmennusta kuuden viikon aikana.",
+   "Osallistamisen tekniikat kokeillaan teidän omilla tilanteillanne.",
+   "Seurantakerta kahden kuukauden päästä."
+  ],
+  "scale": "6–10 hlö · 2 x 4 h + seuranta"
+ },
+ "hr_sparraus": {
+  "title": "HR-sparraus",
+  "fit": "Jos teillä on jo HR-ihminen, hän ei ehkä tarvitse lisäkäsiä vaan jonkun, jonka kanssa ajatella.",
+  "what": [
+   "Kokenut HR-ammattilainen kanssakulkijana tarpeen mukaan.",
+   "Henkilöstöstrategia, osaamisen johtaminen, perehdytys, kehityskeskustelut.",
+   "Myös HR-yksikön organisointi."
+  ],
+  "scale": "Jatkuva · tarpeen mukaan"
+ },
+ "interim_projekti": {
+  "title": "Interim HR projektiin",
+  "fit": "Kun HR:n aika menee arkeen, kehittämisprojekti kannattaa antaa jonkun muun käsiin.",
+  "what": [
+   "Senioritason HR-ammattilainen rajattuun projektiin.",
+   "Esimerkiksi perehdytysmalli tai HR-työkalujen päivittäminen.",
+   "Yhteistyössä oman HR:nne kanssa, ei sen ohi."
+  ],
+  "scale": "Rajattu projekti"
+ },
+ "interim_hr": {
+  "title": "Interim HR",
+  "fit": "Saatte kokeneen HR-ammattilaisen siihen osuuteen viikosta, joka teillä oikeasti on.",
+  "what": [
+   "Käytössä kun tarvitaan, ei kokoaikaista rekrytointia.",
+   "Prosessit ja työkalut, työsuhdeasiat, perehdytys, HR-strategia.",
+   "Aina yhteistyössä johdon ja työntekijöiden kanssa."
+  ],
+  "scale": "Joustava · kuukausiperusteinen"
+ },
+ "hr_kartoitus": {
+  "title": "HR-kartoitus",
+  "fit": "Kun ei tiedetä mistä aloittaa, ensin tilannekuva henkilöstöjohtamisesta.",
+  "what": [
+   "Miten HR-käytännöt tukevat liiketoimintaa ja miten henkilöstö ne kokee.",
+   "Johdon yhteenveto.",
+   "Konkreettinen kehittämissuunnitelma, josta näkee mistä kannattaa aloittaa."
+  ],
+  "scale": "Kartoitus + suunnitelma"
+ },
+ "rekry_sparraus": {
+  "title": "HR-sparraus rekrytoinnin tueksi",
+  "fit": "Jos hoidatte haun itse, kalleimmat virheet tehdään yleensä alussa ja lopussa.",
+  "what": [
+   "Tehtävänkuvan ja hakuilmoituksen sparraus.",
+   "Haastattelurunko ja arviointikriteerit, jotka kestävät vertailun.",
+   "Perehdytyksen ensimmäiset viikot mietitään mukaan."
+  ],
+  "scale": "Kevyt · muutama kerta"
+ },
+ "tarvekartoitus": {
+  "title": "Tarvekartoitus keskusteluna",
+  "fit": "Kun tilanne on vielä auki, ensimmäinen työ on saada se sanotuksi tarkasti.",
+  "what": [
+   "Yksi keskustelu, jossa haetaan varsinainen kysymys esiin.",
+   "Ehdotus siitä, mitä kannattaa tehdä ja missä järjestyksessä.",
+   "Ei sitoumusta jatkosta."
+  ],
+  "scale": "Yksi tapaaminen"
+ },
+ "nykytila": {
+  "title": "Kevyt nykytilan selvitys",
+  "fit": "Jos tilanteesta on eri käsityksiä eri puolilla taloa, kannattaa ensin selvittää mistä puhutaan.",
+  "what": [
+   "Muutama haastattelu eri puolilta organisaatiota.",
+   "Tiivis yhteenveto siitä, mikä toistuu ja mikä on yhden ihmisen näkemys.",
+   "Vasta sen jälkeen päätös siitä, tarvitaanko kehittämistä."
+  ],
+  "scale": "2–3 viikkoa"
+ }
 };
+
+var JOKERS = {
+ "esihenkilo": {
+  "title": "Kokeilkaa ensin ilman meitä",
+  "fit": "Iso osa ”ei uskalleta puuttua” -ongelmasta on itse asiassa ”ei ole rakennetta, jossa puuttuminen olisi luontevaa”.",
+  "what": [
+   "Jokaiselle esihenkilölle 20 minuutin viikoittainen kahdenkeskinen jokaisen tiimiläisen kanssa. Ei agendaa.",
+   "Kahdeksan viikkoa putkeen, ei yhtään peruttua.",
+   "Sen jälkeen kysykää uudestaan, onko valmennukselle tarvetta."
+  ],
+  "scale": "Maksaa vain kalenteritilaa"
+ },
+ "johtoryhma": {
+  "title": "Vaihtakaa kokouksen järjestys",
+  "fit": "Moni johtoryhmä ei kärsi luottamuspulasta vaan agendasta, jossa päätösasiat ovat viimeisenä.",
+  "what": [
+   "Tiedotusasiat kirjallisena etukäteen, ei koskaan kokouksessa.",
+   "Päätösasiat ensimmäisenä, kun ihmiset ovat vielä terävinä.",
+   "Jokainen päätös kirjataan yhdellä rivillä: mitä, kuka, mihin mennessä."
+  ],
+  "scale": "Voimaan ensi maanantaina"
+ },
+ "coaching": {
+  "title": "Vertaispari talon sisältä",
+  "fit": "Ennen kuin ostatte coachin, kokeilkaa halvinta versiota siitä.",
+  "what": [
+   "Kaksi ihmistä eri yksiköistä, tunti kahden viikon välein, vuorotellen kumpi puhuu.",
+   "Kuuntelijan ainoa tehtävä on kysyä, ei neuvoa.",
+   "Kolme kuukautta. Jos se ei riitä, tiedätte ainakin mihin tarvitsette ulkopuolista."
+  ],
+  "scale": "Ei kustannusta"
+ },
+ "tiimi": {
+  "title": "Tehkää työ näkyväksi",
+  "fit": "Moni tiimiristiriita on oikeasti erimielisyys siitä, kuka tekee mitä – ei ihmisistä.",
+  "what": [
+   "Yksi yhteinen taulu, jossa näkyy kaikki kesken oleva työ ja kenellä se on.",
+   "Kymmenen minuutin päivittäinen katsaus siihen tauluun.",
+   "Neljä viikkoa. Katsokaa sen jälkeen, mikä kitka oli ihmisissä ja mikä epäselvyydessä."
+  ],
+  "scale": "Ilmainen · 4 vk kokeilu"
+ },
+ "vuorovaikutus": {
+  "title": "Kirjoittakaa yksi A4",
+  "fit": "Ennen valmennusta kannattaa katsoa, onko teillä ylipäätään sovittu miten erimielisyys otetaan puheeksi.",
+  "what": [
+   "Tiimi kirjoittaa itse yhden sivun: miten sanomme jos jokin ärsyttää, ja kenelle.",
+   "Ei arvoja eikä julistuksia – vain kolme konkreettista sääntöä.",
+   "Palataan siihen kuukauden päästä ja korjataan mikä ei toiminut."
+  ],
+  "scale": "Yksi työpaja, tekin osaatte"
+ },
+ "hyvinvointi": {
+  "title": "Mitatkaa ennen kuin korjaatte",
+  "fit": "Työhyvinvointihanke ilman lukuja on arvaus. Luvut saa ilmaiseksi ja neljässä viikossa.",
+  "what": [
+   "Neljän viikon kalenteri- ja työmääräpoiminta: mihin aika oikeasti menee.",
+   "Sairauspoissaolot ja vaihtuvuus yksiköittäin, ei koko talon keskiarvona.",
+   "Työterveyshuolto istumaan saman pöydän ääreen – se on jo maksettu."
+  ],
+  "scale": "Ei kustannusta · 4 vk"
+ },
+ "kulttuuri": {
+  "title": "Lopettakaa yksi asia",
+  "fit": "Kulttuuri kertoo mitä täällä oikeasti arvostetaan. Nopein testi on katsoa mitä uskallatte lopettaa.",
+  "what": [
+   "Kysykää jokaiselta yksi asia, joka voisi jäädä tekemättä ilman että kukaan huomaa.",
+   "Valitkaa niistä yksi ja lopettakaa se näkyvästi.",
+   "Se kertoo kulttuuristanne enemmän kuin mikään arvotyöpaja."
+  ],
+  "scale": "Yksi kysymys, yksi päätös"
+ },
+ "muutos": {
+  "title": "Viestintärytmi ennen kaikkea muuta",
+  "fit": "Suurin osa muutosahdistuksesta on tiedon epäsäännöllisyyttä, ei tiedon puutetta.",
+  "what": [
+   "Sama tieto samaan aikaan kaikille, joka viikko samana päivänä.",
+   "Myös silloin kun ei ole uutta kerrottavaa – varsinkin silloin.",
+   "Yksi nimetty ihminen, joka vastaa siitä että se lähtee."
+  ],
+  "scale": "Ilmainen · alkaa heti"
+ },
+ "hr": {
+  "title": "Automatisoikaa ennen kuin ostatte ihmistä",
+  "fit": "Osa HR-työstä ei tarvitse asiantuntijaa vaan järjestelmän. Se kannattaa selvittää ensin.",
+  "what": [
+   "Listatkaa kuukauden ajan kaikki HR-tehtävät ja niihin kulunut aika.",
+   "Merkitkää mikä toistuu joka kerta samanlaisena – se on työkalun, ei ihmisen työtä.",
+   "Vasta jäljelle jäävä osuus kertoo, mitä osaamista todella tarvitsette."
+  ],
+  "scale": "Yksi kuukausi, yksi taulukko"
+ },
+ "rekry": {
+  "title": "Korjatkaa läpimenoaika ensin",
+  "fit": "Yleisin syy hyvän hakijan menettämiseen ei ole huono haku vaan hidas prosessi.",
+  "what": [
+   "Mitatkaa kuinka monta päivää kuluu hakemuksesta ensimmäiseen yhteydenottoon.",
+   "Jos se on yli kolme, korjatkaa se ennen kuin ostatte mitään.",
+   "Kysykää viimeksi valitsematta jääneiltä, miltä prosessi tuntui."
+  ],
+  "scale": "Ei kustannusta · kertaluonteinen"
+ },
+ "_default": {
+  "title": "Kysykää ensin viideltä ihmiseltä",
+  "fit": "Ennen kuin ostatte selvitystä, tehkää halvin versio siitä itse.",
+  "what": [
+   "Viisi ihmistä eri puolilta taloa, sama kysymys jokaiselle: mikä täällä on rikki?",
+   "Kirjoittakaa vastaukset muuttamatta niitä kauniimmiksi.",
+   "Jos vastaukset ovat samat, tiedätte jo mitä tehdä."
+  ],
+  "scale": "Viikko ja viisi kahvia"
+ }
+};
+
+/* Puhdas valintafunktio (testi: tests/ehdotukset.mjs). Suluissa säännön numero. */
+function pickPaths(theme, text, headcount){
+  var t = String(text || "").toLowerCase();
+  var parties = /(riita|riido|riite|eivät puhu|ei puhu|eivät tule toimeen|kaksi leiri|leireihin|välit ovat|tulehtu|kiusa|sovittel|konflikt|syyttä)/.test(t);
+  var few = headcount !== null && headcount !== undefined && headcount < 4;
+  /* 3: osapuolinen ristiriita menee sovitteluun, vaikka teema olisi tunnistunut muuksi. */
+  if (parties && theme !== "johtoryhma" && theme !== "hr" && theme !== "rekry" && theme !== "coaching") return ["sovittelu","tiimi_jalkeen"];
+  switch (theme){
+    case "coaching":
+      if (headcount >= 3) return ["ryhmacoaching","yksilocoaching"];
+      return ["yksilocoaching","avoin_esihenkilo"];                              /* 1 */
+    case "esihenkilo":
+      if (few) return ["yksilocoaching","avoin_esihenkilo"];                     /* 5 */
+      return ["esihenkilo_ryhma","tasmaisku"];                                   /* 5 */
+    case "johtoryhma":   return ["johtoryhmatyo","avoin_johtaminen"];            /* 2 */
+    case "tiimi":
+      return ["tiimivalmennus","fasilitoitu_tyopaja"];                           /* 4 */
+    case "vuorovaikutus":
+      return ["puheeksiotto","tiimivalmennus"];                                  /* 4 */
+    case "hyvinvointi":
+      if (/(esihenkil|esimies|esimieh|johtami|lähijohta)/.test(t)) return ["esihenkilo_ryhma","hyvinvointi_kartoitus"];  /* 9 */
+      return ["hyvinvointi_kartoitus","kuormituskeskustelut"];                   /* 9 */
+    case "kulttuuri":    return ["kulttuuri_yhdistelma","tavoiteroolikartta"];   /* 10 */
+    case "muutos":       return ["muutos_tyopajat","osallistamisvalmennus"];     /* 8 */
+    case "hr":
+      if (/(ei ole hr|ei ole omaa hr|ei omaa hr|ilman hr|hr puuttuu|hr lähti|hr:ää ei|ei hr-|ei henkilöstöhallin)/.test(t)) return ["interim_hr","hr_kartoitus"];  /* 7 */
+      if (/(mistä aloitta|emme tiedä|en tiedä|kokonaiskuva|tilannekuva)/.test(t)) return ["hr_kartoitus","hr_sparraus"];  /* 7 */
+      return ["hr_sparraus","interim_projekti"];                                 /* 6 */
+    case "rekry":        return ["rekry_sparraus","interim_hr"];                 /* linjaus 2.10. */
+  }
+  return ["tarvekartoitus","nykytila"];
+}
 
 /* ============================================================
    2. TULKINTA — kevyt suomenkielinen poiminta vapaasta tekstistä
@@ -963,6 +1065,9 @@ function detectTheme(text){
     THEMES[k].keys.forEach(function(key){ if (t.indexOf(key) !== -1) score += key.length > 6 ? 2 : 1; });
     if (score > bestScore){ bestScore = score; best = k; }
   }
+  /* Osapuolinen ristiriita on sovittelijan asia, vaikka tekstissä puhuttaisiin esihenkilöistä tai tiimeistä. */
+  if (/(riido|riita|eivät puhu|ei puhu toisi|eivät tule toimeen|kaksi leiri|välit ovat|tulehtu|kiusa)/.test(t)
+      && best !== "johtoryhma" && best !== "hr" && best !== "rekry" && best !== "coaching") return "vuorovaikutus";
   return bestScore > 0 ? best : null;
 }
 
@@ -1353,12 +1458,12 @@ function fetchLLMSolutions(cb){
 }
 
 function proposalSet(){
-  var set = SOLUTIONS[S.theme] || SOLUTIONS._default;
+  var keys = pickPaths(S.theme, allText(), S.headcount);
+  var a = CARDS[keys[0]], b = CARDS[keys[1]], j = JOKERS[S.theme] || JOKERS._default;
   return [
-    {kind:"agenssi", kicker:"Agenssin polku 1", o:set.primary,
-     scale:(S.headcount ? sizing() : set.primary.scale)},
-    {kind:"agenssi", kicker:"Agenssin polku 2", o:set.alt, scale:set.alt.scale},
-    {kind:"joker",   kicker:"Jokerikortti · ei meidän palvelumme", o:set.joker, scale:set.joker.scale}
+    {kind:"agenssi", kicker:"Agenssin polku 1", o:a, scale:a.scale},
+    {kind:"agenssi", kicker:"Agenssin polku 2", o:b, scale:b.scale},
+    {kind:"joker",   kicker:"Jokerikortti · ei meidän palvelumme", o:j, scale:j.scale}
   ];
 }
 
@@ -1560,9 +1665,10 @@ function sizing(){
   var n = S.headcount;
   if (!n && S.budget && !S.budget.unknown) return "Budjettiraami " + S.budget.text + ", osallistujamäärä auki";
   if (!n) return "—";
-  if (n <= 1) return "Yksilöcoaching, tyypillisesti 5–8 tapaamista";
-  if (n <= 10) return n + " hlö: pienryhmä, 3–5 lähipäivää + välitehtävät";
-  if (n <= 30) return n + " hlö: 2–3 rinnakkaisryhmää tai valmennusohjelma";
+  if (n <= 1) return "Yksilöcoaching, 5–6 työskentelyä";
+  if (n < 4) return n + " hlö: yksilöcoaching tai avoin valmennus";
+  if (n <= 18) return n + " hlö: yksi ryhmä, 3–4 x 4 h + välitehtävät";
+  if (n <= 30) return n + " hlö: kaksi rinnakkaista ryhmää tai yhteiset työpajat";
   return n + " hlö: laajempi ohjelma, edellyttää vaiheistusta";
 }
 
